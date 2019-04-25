@@ -52,7 +52,7 @@ func (a *Allocations) GarbageCollect(args *nstructs.AllocSpecificRequest, reply 
 func (a *Allocations) Signal(args *nstructs.AllocSignalRequest, reply *nstructs.GenericResponse) error {
 	defer metrics.MeasureSince([]string{"client", "allocations", "signal"}, time.Now())
 
-	// Check submit job permissions
+	// Check alloc lifecycle permissions
 	if aclObj, err := a.c.ResolveToken(args.AuthToken); err != nil {
 		return err
 	} else if aclObj != nil && !aclObj.AllowNsOp(args.Namespace, acl.NamespaceCapabilityAllocLifecycle) {
